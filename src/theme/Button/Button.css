@@ -1,0 +1,67 @@
+.root {
+  background-color: var(--c-bluetooth);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0.4em 1em;
+  font-size: var(--fs);
+  border-radius: 0.5em;
+  cursor: pointer;
+  position: relative;
+  @mixin box-shadow;
+  @mixin transition;
+
+  &:hover {
+    @mixin box-shadow-hover;
+  }
+
+  &:disabled {
+    background-color: var(--c-border-dark);
+    cursor: auto;
+    transform: translateY(0);
+    @mixin box-shadow;
+  }
+}
+
+.hasContent.hasIcon {
+  padding: 0.4em 1.2em 0.4em 0.6em;
+}
+
+.hasContent {
+  .icon {
+    margin-right: 0.3em;
+  }
+}
+
+.icon {
+  font-size: 2em;
+}
+
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 1.5em;
+  opacity: 0;
+  @mixin transition opacity;
+}
+
+.icon,
+.content {
+  @mixin transition opacity;
+}
+
+.isLoading {
+  .loader {
+    opacity: 1;
+  }
+
+  .icon,
+  .content {
+    opacity: 0;
+  }
+}
+
+.isLarge {
+  font-size: var(--fs-large);
+}

@@ -1,0 +1,147 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.devices {
+  display: grid;
+  grid-gap: 10vmin;
+  grid-template-areas:
+    '. lightbulb .'
+    'matrixleft car matrixright'
+    '. audio .';
+}
+
+.lightBulb {
+  grid-area: lightbulb;
+  width: 15vmin;
+  height: 15vmin;
+  border-radius: 50%;
+}
+
+.matrixLeft,
+.matrixRight {
+  width: 20vmin;
+  height: 5vmin;
+  transform: rotate(-40deg);
+}
+
+.matrixLeft {
+  grid-area: matrixleft;
+}
+
+.matrixRight {
+  grid-area: matrixright;
+  transform: rotate(40deg);
+}
+
+.car {
+  grid-area: car;
+  width: 10vmin;
+  height: 15vmin;
+  margin: 0 auto;
+}
+
+.audio {
+  position: fixed;
+  left: 5vmin;
+  top: 5vmin;
+}
+
+.button {
+  background-color: var(--c-bkg-light);
+  color: var(--c-p);
+  border: 1px dashed var(--c-p);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  text-align: center;
+  font-size: 1.5vmin;
+}
+
+.buttonActive {
+  background-color: var(--c-bluetooth);
+  color: var(--c-white);
+}
+
+.footer {
+  position: fixed;
+  bottom: var(--spacing);
+  left: var(--spacing);
+  right: var(--spacing);
+}
+
+/*
+.connectionErrorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90vw;
+}
+
+.connectionError {
+  margin-bottom: var(--spacing-page);
+  max-width: 600px;
+}
+
+.footer {
+  position: fixed;
+  bottom: var(--spacing);
+  left: var(--spacing);
+  right: var(--spacing);
+}
+
+.header {
+  position: fixed;
+  left: var(--spacing);
+  right: var(--spacing);
+  top: var(--spacing);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.device {
+}
+
+.controls {
+  position: fixed;
+  right: var(--spacing);
+  top: var(--spacing);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.controlsButton {
+  border: 1px solid var(--c-border-light);
+  background-color: var(--c-bkg);
+  color: var(--c-border-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em;
+  border-radius: 0.3em;
+  cursor: pointer;
+  font-size: 2vmin;
+
+  & + .controlsButton {
+    margin-top: var(--spacing-half);
+  }
+}
+
+.controlsButtonActive {
+  background-color: var(--c-bluetooth);
+  border-color: var(--c-bluetooth);
+  color: #fff;
+}
+
+.controlsButtonIcon {
+}
+*/
