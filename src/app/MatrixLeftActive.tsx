@@ -15,7 +15,7 @@ const MatrixLeftActive = ({
   const { matrix: fullMatrix, beat } = useHarlemShake();
   const fullMatrixRef = React.useRef<Array<number>>(null);
   const Matrix = React.useMemo<UsbMatrix>(() => new UsbMatrix(), []);
-  const intensity = React.useMemo(() => (beat >= 5 ? 200 : 30), [beat]);
+  const intensity = React.useMemo(() => (beat >= 5 ? 255 : 30), [beat]);
 
   React.useEffect(() => {
     if (
