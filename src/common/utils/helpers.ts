@@ -38,3 +38,6 @@ export const getRandomColor = (): RgbColorI => {
         .join('')
   );
 };
+
+export const arrayFlat = <T = any>(array: T[][]): T[] =>
+  array.reduce((acc, current) => [...acc, ...current], []);

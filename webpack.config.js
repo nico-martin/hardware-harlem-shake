@@ -37,12 +37,10 @@ module.exports = (env, argv) => {
     devtool: dev ? 'source-map' : false,
     mode: dev ? 'development' : 'production',
     devServer: {
-      contentBase: dirDist,
-      compress: true,
-      port: process.env.PORT_DEV || 8080,
+      port: process.env.PORT || 8652,
       https: serveHttps,
-      historyApiFallback: true,
       hot: true,
+      historyApiFallback: true,
     },
     module: {
       rules: [

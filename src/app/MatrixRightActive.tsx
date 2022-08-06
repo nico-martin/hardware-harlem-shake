@@ -1,25 +1,20 @@
 import React from 'react';
+import UsbMatrix from '@common/usb/UsbMatrix';
 import cn from '@common/utils/classnames';
-import { setMatrixValue } from '@common/utils/matrix';
 import { useHarlemShake } from '../HarlemShakeContext';
-import useBLECharacteristic from './hooks/useBLECharacteristic';
-import useScreen from './hooks/useScreen';
 
 const MatrixRightActive = ({
   className = '',
-  batteryChar,
-  matrixChar,
   name,
+  usbSend,
 }: {
   className?: string;
-  batteryChar: BluetoothRemoteGATTCharacteristic;
-  matrixChar: BluetoothRemoteGATTCharacteristic;
   name: string;
+  usbSend: (data: BufferSource) => void;
 }) => {
-  const batteryLevelChar = useBLECharacteristic(batteryChar);
-  const [screen, setScreen] = useScreen(matrixChar);
   const { matrix: fullMatrix, beat } = useHarlemShake();
   const fullMatrixRef = React.useRef<Array<number>>(null);
+  const Matrix = React.useMemo<UsbMatrix>(() => new UsbMatrix(), []);
 
   const intensity = React.useMemo(() => (beat >= 5 ? 200 : 30), [beat]);
 
@@ -29,22 +24,13 @@ const MatrixRightActive = ({
       JSON.stringify(fullMatrixRef.current) !== JSON.stringify(fullMatrix)
     ) {
       fullMatrixRef.current = fullMatrix;
-      const matrix = [...fullMatrix].splice(17, 35);
-      setScreen(
-        Array(7)
-          .fill(0)
-          .map((e, i) => matrix.map((v) => (7 - i <= v ? intensity : 0)))
-      );
+      const matrix = [...fullMatrix].splice(16, 33);
+      Matrix.setGridMatrixFromAudioArray(matrix, intensity);
+      usbSend(Matrix.getDataview());
     }
   }, [fullMatrix]);
 
-  return (
-    <div className={cn(className)}>
-      {name}
-      <br />
-      Battery {batteryLevelChar.value?.getUint8(0)}%
-    </div>
-  );
+  return <div className={cn(className)}>{name}</div>;
 };
 
 export default MatrixRightActive;

@@ -31,14 +31,16 @@ const HarlemShakeContext = React.createContext<HarlemShakeContextI>({
   beatPulse: 0,
 });
 
-const WIDTH = 700;
-const HEIGHT = 700;
+const BAR_HEIGHT_COUNT = 16;
+const FULL_BAR_COUNT = 32;
+const WIDTH = BAR_HEIGHT_COUNT * 100;
+const HEIGHT = BAR_HEIGHT_COUNT * 100;
 const BAR_RANGE_OFFSET_START = 1000;
 let beatIntervalSet: boolean = false;
 let beatInterval: NodeJS.Timer = null;
 const intervalTime = 860;
 const startDelay = 860;
-const showCanvas = false;
+const showCanvas = true;
 
 const HarlemShakeProvider = ({ children }: { children: JSX.Element }) => {
   const audioRef = React.useRef<HTMLMediaElement>(null);
@@ -73,11 +75,10 @@ const HarlemShakeProvider = ({ children }: { children: JSX.Element }) => {
 
   const tick = () => {
     //requestAnimationFrame(tick);
-    const barCount = 34;
 
     const ctx = canvasRef.current ? canvasRef.current.getContext('2d') : null;
-    const dataArray = new Uint8Array(barCount);
-    const barWidth = WIDTH / barCount;
+    const dataArray = new Uint8Array(FULL_BAR_COUNT);
+    const barWidth = WIDTH / FULL_BAR_COUNT;
     let x = 0;
     analyser.getByteFrequencyData(dataArray);
     const isRunning = dataArray.filter(Boolean).length !== 0;
@@ -88,13 +89,14 @@ const HarlemShakeProvider = ({ children }: { children: JSX.Element }) => {
       ctx.fillRect(0, 0, WIDTH, HEIGHT); // Fade effect, set opacity to 1 for sharper rendering of bars
     }
     setMatrix(
-      new Array(barCount)
+      new Array(FULL_BAR_COUNT)
         .fill('')
         .map((e, i) => dataArray[i] / 255)
         .map((barHeightZeroToOne) => {
           const fullBarHeight = HEIGHT + BAR_RANGE_OFFSET_START;
           const height = barHeightZeroToOne * fullBarHeight;
           const pixelHeight = Math.floor(height / 100);
+
           if (ctx) {
             ctx.fillStyle = `rgb(${200},${200},${200})`;
             ctx.fillRect(
