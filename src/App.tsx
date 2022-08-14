@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Icon, Message } from '@theme';
 import cn from '@common/utils/classnames';
+import { generateRainbowColors } from '@common/utils/helpers';
 import styles from './App.css';
 import HarlemShakeProvider from './HarlemShakeContext';
 import Audio from './app/Audio';

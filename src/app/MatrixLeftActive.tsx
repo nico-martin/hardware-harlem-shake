@@ -1,7 +1,10 @@
 import React from 'react';
 import UsbMatrix from '@common/usb/UsbMatrix';
 import cn from '@common/utils/classnames';
+import { generateRainbowColors } from '@common/utils/helpers';
 import { useHarlemShake } from '../HarlemShakeContext';
+
+const colors = generateRainbowColors(32);
 
 const MatrixLeftActive = ({
   className = '',
@@ -24,7 +27,11 @@ const MatrixLeftActive = ({
     ) {
       fullMatrixRef.current = fullMatrix;
       const matrix = [...fullMatrix].splice(0, 16);
-      Matrix.setGridMatrixFromAudioArray(matrix, intensity);
+      Matrix.setGridMatrixFromAudioArray(
+        matrix,
+        intensity,
+        [...colors].splice(0, 16)
+      );
       usbSend(Matrix.getDataview());
     }
   }, [fullMatrix]);

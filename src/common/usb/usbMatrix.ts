@@ -1,19 +1,8 @@
-/*
-export type rgbT = [r: number, g: number, b: number];
-
-const array = (length: number): null[] =>
-  new Array(length).fill('').map(() => null);
-
-const getGridMatrix = (
-  [r, g, b]: rgbT = [0, 0, 0],
-  size: number = 16
-): rgbT[][] => array(size).map(() => array(size).map(() => [r, g, b]));
-
-export const audioToMatrixArray = (audio: Array<number>) => {
-  const emptyMatrix
-};
-*/
-import { arrayFlat } from '@common/utils/helpers';
+import {
+  arrayFlat,
+  generateRainbowColors,
+  RgbColorI,
+} from '@common/utils/helpers';
 
 type rgbT = [r: number, g: number, b: number];
 
@@ -34,7 +23,12 @@ class UsbMatrix {
     this.gridMatrix = getGridMatrix([0, 0, 0], size);
   }
 
-  setGridMatrixFromAudioArray(audio: Array<number>, intensity: number = 200) {
+  setGridMatrixFromAudioArray(
+    audio: Array<number>,
+    intensity: number = 200,
+    colorsPerCol: Array<RgbColorI>
+  ) {
+    const colorsPerRow = generateRainbowColors(16);
     this.gridMatrix = this.gridMatrix.map((cols, rowIndex, allRows) =>
       cols.map((pixel, colIndex) => {
         const audioHeight = audio[colIndex];
@@ -44,6 +38,11 @@ class UsbMatrix {
 
         const reversedRowIndex = allRows.length - 1 - rowIndex;
         const int = reversedRowIndex < audioHeight ? intensity : 0;
+        if (int === 255) {
+          const { r, g, b } = colorsPerRow[rowIndex];
+          //const { r, g, b } = colorsPerCol[colIndex];
+          return [r, g, b];
+        }
         return [int, int, int];
       })
     );
